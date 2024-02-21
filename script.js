@@ -1,10 +1,19 @@
 // JavaScript
 document.addEventListener('DOMContentLoaded', function () {
-    // Colors fixed now, make them choosable later
-    let backgroundFillColor = 'white';
-    let activeColor = 'black';
-    
-    let isDrawing = false;
+    const colors = ['black', 'white', 'red', 'blue', 'yellow'];
+    const colorPickerContainer = document.getElementById('colorpicker');
+
+    colors.forEach(color => {
+        const colorOption = document.createElement('div');
+        colorOption.classList.add('color-option');
+        colorOption.style.backgroundColor = color;
+        colorOption.addEventListener('click', function() {
+            activeColor = color;
+            color.style.backgroundColor = color+10;
+        });
+        colorPickerContainer.appendChild(colorOption);
+    });
+
 
     // Create Grid
     let gridSize = 30;
@@ -25,37 +34,34 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Drawing
+    let isDrawing = false; // Ensure this variable is declared here
+    let activeColor = 'black'; // Ensure this variable is declared here
+
     const pixels = document.querySelectorAll('.pixel');
 
     pixels.forEach(pixel => {
         pixel.addEventListener('mousedown', function () {
             isDrawing = true;
-            // Just the first dot here:
             this.style.backgroundColor = activeColor;
-            
         });
 
-        // Mousemove instead of mouseover because of better performance handling
         pixel.addEventListener('mousemove', function () {
-            if (isDrawing == true) {
+            if (isDrawing) {
                 this.style.backgroundColor = activeColor;
             }
         });
     });
+
     // Stop Drawing
     document.addEventListener('mouseup', function () {
         isDrawing = false;
     });
 
-
-
     // Clear Canvas
-    var clearButton = document.getElementById('Clear');
+    const clearButton = document.getElementById('Clear');
     clearButton.addEventListener('click', function () {
-        var pixels = document.querySelectorAll('.pixel');
         pixels.forEach(function (pixel) {
-            pixel.style.backgroundColor = backgroundFillColor;
+            pixel.style.backgroundColor = 'white';
         });
     });
-
 });

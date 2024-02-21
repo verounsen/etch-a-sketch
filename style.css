@@ -3,7 +3,7 @@ body {
     background-color: lightgray;
 }
 
-h1 {
+h3 {
     color: black;
 }
 
@@ -24,8 +24,32 @@ h1 {
     width: 25px;
     border-color: black;
     background-color: white;
-    border-style: solid;
     border-width: thin;
     display: inline-block;
-    cursor: crosshair; /* Change cursor to  when hovering over pixel */
+    cursor: crosshair; /* Change cursor to crosshair when hovering over pixel */
+}
+
+/* COLORPICKER */
+.colorpicker {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 12px;
+}
+
+.color-option {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.color-option:hover {
+    /* border: 2px solid whitesmoke; */
+    filter: brightness(90%);
+}
+
+/* Darken the color option when clicked */
+.color-option:active {
+    filter: brightness(80%);
 }
