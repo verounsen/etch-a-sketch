@@ -1,0 +1,31 @@
+/* style.css */
+body {
+    background-color: lightgray;
+}
+
+h1 {
+    color: black;
+}
+
+#pixelgrid {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: left;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.pixel {
+    height: 25px;
+    width: 25px;
+    border-color: black;
+    background-color: white;
+    border-style: solid;
+    border-width: thin;
+    display: inline-block;
+    cursor: crosshair; /* Change cursor to  when hovering over pixel */
+}
