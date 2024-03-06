@@ -1,53 +1,86 @@
-// JavaScript
 document.addEventListener('DOMContentLoaded', function () {
-    const colors = ['black', 'white', 'red', 'blue', 'yellow'];
+    
+    // COLOR PALETTE
+    const colors = ['black', 'white', 'gold', 'orange', 'red', 'DarkViolet', 'DodgerBlue', 'LimeGreen'];
     const colorPickerContainer = document.getElementById('colorpicker');
+    let activeColor = 'black'; 
 
-    colors.forEach(color => {
-        const colorOption = document.createElement('div');
-        colorOption.classList.add('color-option');
-        colorOption.style.backgroundColor = color;
-        colorOption.addEventListener('click', function() {
-            activeColor = color;
-            color.style.backgroundColor = color+10;
+        // Color Palette Creation
+        colors.forEach(color => {
+            const colorOption = document.createElement('div');
+            colorOption.classList.add('color-option');
+            colorOption.style.backgroundColor = color;
+            colorOption.addEventListener('click', function () {
+                activeColor = color;
+            });
+            colorPickerContainer.appendChild(colorOption);
         });
-        colorPickerContainer.appendChild(colorOption);
-    });
+    
 
-
-    // Create Grid
-    let gridSize = 30;
+    // CREATE GRID / CANVAS
     const pixelgrid = document.getElementById('pixelgrid');
+    let gridSize = 20;
+    
+    // Ensure pixel grid has a relative or absolute position
+    pixelgrid.style.position = 'relative';
 
     for (let i = 0; i < gridSize; i++) {
         const row = document.createElement('div');
         row.classList.add('row');
 
-        // Create Row // PIXEL X GRIDSIZE
+        // Create Row // PIXEL Times GRIDSIZE
         for (let j = 0; j < gridSize; j++) {
             const pixel = document.createElement('div');
             pixel.classList.add('pixel');
             row.appendChild(pixel);
         }
-        // Append Rows // ROW X GRIDSIZE
+        // Append Rows // ROW Times GRIDSIZE
         pixelgrid.appendChild(row);
     }
 
-    // Drawing
-    let isDrawing = false; // Ensure this variable is declared here
-    let activeColor = 'black'; // Ensure this variable is declared here
+    // Clear Canvas
+    const clearButton = document.getElementById('clear');
+    clearButton.addEventListener('click', function () {
+        pixels.forEach(function (pixel) {
+            pixel.style.backgroundColor = 'white';
+            pixel.style.border = '';
+        });
+    });
 
+    // Toggle Grid
+
+    let toggleVisible = true;
+    //const pixelBorder = "0.5px ridge";
+    //const pixelBorderColor = "grey";
+
+
+    // DRAWING
+    let isDrawing = false;
     const pixels = document.querySelectorAll('.pixel');
 
     pixels.forEach(pixel => {
         pixel.addEventListener('mousedown', function () {
             isDrawing = true;
-            this.style.backgroundColor = activeColor;
+            this.style.backgroundColor = activeColor; // Coloring in a pixel if pixel is clicked
         });
 
         pixel.addEventListener('mousemove', function () {
             if (isDrawing) {
-                this.style.backgroundColor = activeColor;
+                this.style.backgroundColor = activeColor; // Color while move the mouse
+            } 
+        });
+
+        pixel.addEventListener('mouseenter', function () {
+            if (!isDrawing) {
+                this.style.border = '2px dashed';
+                this.style.borderColor = activeColor; // Sets the border color when hovering over the pixel
+            }
+        });
+        
+        pixel.addEventListener('mouseleave', function () {
+            if (!isDrawing) {
+                this.style.border = '';
+                this.style.borderColor = '' // Removes the border color when leaving the pixel
             }
         });
     });
@@ -57,11 +90,13 @@ document.addEventListener('DOMContentLoaded', function () {
         isDrawing = false;
     });
 
-    // Clear Canvas
-    const clearButton = document.getElementById('Clear');
-    clearButton.addEventListener('click', function () {
-        pixels.forEach(function (pixel) {
-            pixel.style.backgroundColor = 'white';
-        });
+    
+    // COLORED CURSOR
+    document.addEventListener('mousemove', function(e) {
+        const cursor = document.querySelector('.cursor');
+        cursor.style.backgroundColor = activeColor;
+        cursor.style.left = e.pageX - (cursor.offsetWidth / 2) + 'px';
+        cursor.style.top = e.pageY - (cursor.offsetHeight / 2) + 'px';
+    });  
     });
-});
+
