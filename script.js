@@ -3,45 +3,42 @@ document.addEventListener('DOMContentLoaded', function () {
     // COLOR PALETTE
     const colors = ['black', 'white', 'gold', 'orange', 'red', 'DarkViolet', 'DodgerBlue', 'LimeGreen'];
     const colorPickerContainer = document.getElementById('colorpicker');
-    let activeColor = 'black'; 
+    let activeColor = 'black';
 
-        // Color Palette Creation
-        colors.forEach(color => {
-            const colorOption = document.createElement('div');
-            colorOption.classList.add('color-option');
-            colorOption.style.backgroundColor = color;
-            colorOption.addEventListener('click', function () {
-                activeColor = color;
-            });
-            colorPickerContainer.appendChild(colorOption);
+    // Color Palette Creation
+    colors.forEach(color => {
+        const colorOption = document.createElement('div');
+        colorOption.classList.add('color-option');
+        colorOption.style.backgroundColor = color;
+        colorOption.addEventListener('click', function () {
+            activeColor = color;
         });
-    
+        colorPickerContainer.appendChild(colorOption);
+    });
 
     // CREATE GRID / CANVAS
     const pixelgrid = document.getElementById('pixelgrid');
-    let gridDimension = 625;
-    let pixelSize = 25;
-    if (pixelSize >= 150){pixelSize = 150}else if (pixelSize <= 10) {pixelSize = 10};
-    let gridSize = gridDimension / pixelSize;
+    let gridSize = 25;
 
-    
     // Ensure pixel grid has a relative or absolute position
     pixelgrid.style.position = 'relative';
+    generateGrid();
 
-    for (let i = 0; i < gridSize; i++) {
-        const row = document.createElement('div');
-        row.classList.add('row');
+    function generateGrid() {
+        for (let i = 0; i < gridSize; i++) {
+            const row = document.createElement('div');
+            row.classList.add('row');
 
-        // Create Row // PIXEL Times GRIDSIZE
-        for (let j = 0; j < gridSize; j++) {
-            const pixel = document.createElement('div');
-            pixel.classList.add('pixel');
-            pixel.style.height = pixelSize + 'px'; // Set height
-            pixel.style.width = pixelSize + 'px'; // Set width
-            row.appendChild(pixel);
+            // Create Row // PIXEL Times GRIDSIZE
+            for (let j = 0; j < gridSize; j++) {
+                const pixel = document.createElement('div');
+                pixel.classList.add('pixel');
+                pixel.classList.add('pixel-size-medium');
+                row.appendChild(pixel);
+            }
+            // Append Rows // ROW Times GRIDSIZE
+            pixelgrid.appendChild(row);
         }
-        // Append Rows // ROW Times GRIDSIZE
-        pixelgrid.appendChild(row);
     }
 
     // Clear Canvas
@@ -53,12 +50,35 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Toggle Grid
+    // Event listener for radio buttons
+    const radioButtons = document.querySelectorAll('input[type="radio"][name="gridSize"]');
+    radioButtons.forEach(radioButton => {
+        radioButton.addEventListener('change', function () {
+            if (this.checked) {
+                const chosenSize = parseInt(this.value);
+                gridSize = chosenSize;
+                updateGrid();
+            }
+        });
+    });
 
-    let toggleVisible = true;
-    //const pixelBorder = "0.5px ridge";
-    //  const pixelBorderColor = "grey";
+    // Function to update grid size
+    function updateGrid() {
+        const pixels = document.querySelectorAll('.pixel');
+        pixels.forEach(pixel => {
+            // Remove existing pixel size class
+            pixel.classList.remove('pixel-size-small', 'pixel-size-medium', 'pixel-size-big');
 
+            // Add the appropriate pixel size class
+            if (gridSize === 10) {
+                pixel.classList.add('pixel-size-small');
+            } else if (gridSize === 25) {
+                pixel.classList.add('pixel-size-medium');
+            } else if (gridSize === 50) {
+                pixel.classList.add('pixel-size-big');
+            }
+        });
+    }
 
     // DRAWING
     let isDrawing = false;
@@ -73,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function () {
         pixel.addEventListener('mousemove', function () {
             if (isDrawing) {
                 this.style.backgroundColor = activeColor; // Color while move the mouse
-            } 
+            }
         });
 
         pixel.addEventListener('mouseenter', function () {
@@ -82,11 +102,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 this.style.borderColor = activeColor; // Sets the border color when hovering over the pixel
             }
         });
-        
+
         pixel.addEventListener('mouseleave', function () {
             if (!isDrawing) {
                 this.style.border = '';
-                this.style.borderColor = '' // Removes the border color when leaving the pixel
+                this.style.borderColor = ''; // Removes the border color when leaving the pixel
             }
         });
     });
@@ -96,13 +116,11 @@ document.addEventListener('DOMContentLoaded', function () {
         isDrawing = false;
     });
 
-    
     // COLORED CURSOR
-    document.addEventListener('mousemove', function(e) {
+    document.addEventListener('mousemove', function (e) {
         const cursor = document.querySelector('.cursor');
         cursor.style.backgroundColor = activeColor;
         cursor.style.left = e.pageX - (cursor.offsetWidth / 2) + 'px';
         cursor.style.top = e.pageY - (cursor.offsetHeight / 2) + 'px';
-    });  
     });
-
+});

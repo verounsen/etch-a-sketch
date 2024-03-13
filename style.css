@@ -16,6 +16,13 @@ body {
     justify-content: flex-start; /* Align items to the top vertically */
 }
 
+.containerBottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 h3 {
     color: black;
 }
@@ -24,8 +31,10 @@ h3 {
 .colorpicker {
     display: flex;
     flex-direction: row;
+    justify-content: center; /* Center items horizontally */
     margin-bottom: 12px;
 }
+
 
 .color-option {
     width: 25px;
@@ -61,8 +70,6 @@ h3 {
 }
 
 .pixel {
-    height: 25px;
-    width: 25px;
     border: 0.5px ridge;
     border-color: grey;
     box-sizing: border-box; /* Ensures border and padding are included in the specified width and height and highlight is not growing them*/
@@ -70,6 +77,23 @@ h3 {
     display: inline-block;
     /* cursor: none; */
 }
+
+/* Pixel Sizes */
+.pixel-size-small {
+    height: 10px;
+    width: 10px;
+}
+
+.pixel-size-medium {
+    height: 20px;
+    width: 20px;
+}
+
+.pixel-size-big {
+    height: 30px;
+    width: 30px;
+}
+
 
 /* Cursor */
 /* Feature will be added later, cursor should have a floating square/circle next to it indicating the color */

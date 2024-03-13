@@ -10,19 +10,28 @@
 <body>
     
     <div class="container">
-
     <!-- Elements inside container are centered -->
+    
     <div id="colorpicker" class="colorpicker">
-    <!-- Color picker will be generated here -->
+    <!-- Color palette will be generated here -->
     </div>
 
     <div id="pixelgrid">
     <!-- Grid will be generated here -->
     </div>
 
+    <div class="containerBottom">
     <!-- Delete Button -->
     <button id="clear">Clear Canvas</button>
-    
+
+    <!-- Radio Buttons for Grid Size -->
+    <div>Canvas Size:</div>
+    <div id="gridSizeOptions">
+        <label><input type="radio" name="gridSize" value="50"> Big</label>
+        <label><input type="radio" name="gridSize" value="25" checked> Medium</label>
+        <label><input type="radio" name="gridSize" value="10"> Small</label>
+    </div>
+    </div>
     <!-- Toggle Grid Button -->
     <!-- T<button id="toggleGrid">Toggle Grid</button>-->
 
