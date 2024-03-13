@@ -19,7 +19,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // CREATE GRID / CANVAS
     const pixelgrid = document.getElementById('pixelgrid');
-    let gridSize = 20;
+    let gridDimension = 625;
+    let pixelSize = 25;
+    if (pixelSize >= 150){pixelSize = 150}else if (pixelSize <= 10) {pixelSize = 10};
+    let gridSize = gridDimension / pixelSize;
+
     
     // Ensure pixel grid has a relative or absolute position
     pixelgrid.style.position = 'relative';
@@ -32,6 +36,8 @@ document.addEventListener('DOMContentLoaded', function () {
         for (let j = 0; j < gridSize; j++) {
             const pixel = document.createElement('div');
             pixel.classList.add('pixel');
+            pixel.style.height = pixelSize + 'px'; // Set height
+            pixel.style.width = pixelSize + 'px'; // Set width
             row.appendChild(pixel);
         }
         // Append Rows // ROW Times GRIDSIZE
@@ -51,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let toggleVisible = true;
     //const pixelBorder = "0.5px ridge";
-    //const pixelBorderColor = "grey";
+    //  const pixelBorderColor = "grey";
 
 
     // DRAWING
