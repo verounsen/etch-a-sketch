@@ -53,8 +53,8 @@ document.addEventListener('DOMContentLoaded', function () {
     clearButton.addEventListener('click', function () {
         pixels.forEach(function (pixel) {
             pixel.style.backgroundColor = canvasColor;
-            pixel.style.border = borderThickness + 'px';
         });
+        borderChange();
     });
 
     // Toggle Grid Button
@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function borderChange(){
         // Change border of every Pixel
         pixels.forEach(pixel => {
-            pixel.style.border = borderThickness + 'px solid ' + borderColorChanged;;
+            pixel.style.border = borderThickness + 'px solid ' + borderColorChanged;
             pixel.style.borderColor = borderColorChanged; // Restore default border color
         });
     }
