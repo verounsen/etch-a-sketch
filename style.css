@@ -35,7 +35,6 @@ h3 {
     margin-bottom: 12px;
 }
 
-
 .color-option {
     width: 25px;
     height: 25px;
@@ -70,13 +69,14 @@ h3 {
 }
 
 .pixel {
-    border: 0.5px ridge;
-    border-color: grey;
+     /* border: 0.5px; */
+     /*border-color: grey;*/
     box-sizing: border-box; /* Ensures border and padding are included in the specified width and height and highlight is not growing them*/
     background-color: white;
     display: inline-block;
     /* cursor: none; */
 }
+
 
 /* Pixel Sizes */
 .pixel-size-small {
@@ -90,19 +90,6 @@ h3 {
 }
 
 .pixel-size-big {
-    height: 30px;
-    width: 30px;
+    height: 26px;
+    width: 26px;
 }
-
-
-/* Cursor */
-/* Feature will be added later, cursor should have a floating square/circle next to it indicating the color */
-
-.cursor {
-    width: 20px;
-    height: 20px;
-    background-color: yellow;
-    position: fixed;
-    z-index: 9999;
-    pointer-events: none; /* Ensures the div does not interfere with mouse events */
-  }

@@ -1,9 +1,15 @@
 document.addEventListener('DOMContentLoaded', function () {
-    
+
     // COLOR PALETTE
     const colors = ['black', 'white', 'gold', 'orange', 'red', 'DarkViolet', 'DodgerBlue', 'LimeGreen'];
     const colorPickerContainer = document.getElementById('colorpicker');
     let activeColor = 'black';
+    let canvasColor = 'white';
+    let borderColor = 'grey';
+    let borderColorChanged = 'grey';
+    
+    let borderThickness =  0.5; 
+    let gridIsOn = true;
 
     // Color Palette Creation
     colors.forEach(color => {
@@ -34,6 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const pixel = document.createElement('div');
                 pixel.classList.add('pixel');
                 pixel.classList.add('pixel-size-medium');
+                pixel.style.border = borderThickness + 'px solid ' + borderColor;
                 row.appendChild(pixel);
             }
             // Append Rows // ROW Times GRIDSIZE
@@ -45,12 +52,28 @@ document.addEventListener('DOMContentLoaded', function () {
     const clearButton = document.getElementById('clear');
     clearButton.addEventListener('click', function () {
         pixels.forEach(function (pixel) {
-            pixel.style.backgroundColor = 'white';
-            pixel.style.border = '';
+            pixel.style.backgroundColor = canvasColor;
+            pixel.style.border = borderThickness + 'px';
         });
     });
 
-    // Event listener for radio buttons
+    // Toggle Grid Button
+    const toggleGridButton = document.getElementById('toggleGrid');
+    toggleGridButton.addEventListener('click', function () {
+        if (gridIsOn) {
+            borderColorChanged = canvasColor;
+            gridIsOn = false;
+            borderThickness = 0;
+        }
+        else {
+            borderColorChanged = borderColor;
+            gridIsOn = true;
+            borderThickness = 0.5;
+        }
+        borderChange();
+    });
+
+    // Grid Size Radio Buttons
     const radioButtons = document.querySelectorAll('input[type="radio"][name="gridSize"]');
     radioButtons.forEach(radioButton => {
         radioButton.addEventListener('change', function () {
@@ -62,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Function to update grid size
+    // Function to Update Grid Size
     function updateGrid() {
         const pixels = document.querySelectorAll('.pixel');
         pixels.forEach(pixel => {
@@ -97,16 +120,16 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         pixel.addEventListener('mouseenter', function () {
-            if (!isDrawing) {
+            if (!isDrawing && this.style.backgroundColor !== activeColor) {
                 this.style.border = '2px dashed';
                 this.style.borderColor = activeColor; // Sets the border color when hovering over the pixel
             }
         });
 
         pixel.addEventListener('mouseleave', function () {
-            if (!isDrawing) {
-                this.style.border = '';
-                this.style.borderColor = ''; // Removes the border color when leaving the pixel
+            if (!isDrawing && this.style.backgroundColor !== activeColor) {
+                pixel.style.border = borderThickness + 'px solid ' + borderColorChanged;
+                this.style.borderColor = borderColorChanged; // Removes the border color when leaving the pixel
             }
         });
     });
@@ -114,13 +137,14 @@ document.addEventListener('DOMContentLoaded', function () {
     // Stop Drawing
     document.addEventListener('mouseup', function () {
         isDrawing = false;
+        borderChange();
     });
 
-    // COLORED CURSOR
-    document.addEventListener('mousemove', function (e) {
-        const cursor = document.querySelector('.cursor');
-        cursor.style.backgroundColor = activeColor;
-        cursor.style.left = e.pageX - (cursor.offsetWidth / 2) + 'px';
-        cursor.style.top = e.pageY - (cursor.offsetHeight / 2) + 'px';
-    });
+    function borderChange(){
+        // Change border of every Pixel
+        pixels.forEach(pixel => {
+            pixel.style.border = borderThickness + 'px solid ' + borderColorChanged;;
+            pixel.style.borderColor = borderColorChanged; // Restore default border color
+        });
+    }
 });
