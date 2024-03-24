@@ -3,12 +3,14 @@ document.addEventListener('DOMContentLoaded', function () {
     // COLOR PALETTE
     const colors = ['black', 'white', 'gold', 'orange', 'red', 'DarkViolet', 'DodgerBlue', 'LimeGreen'];
     const colorPickerContainer = document.getElementById('colorpicker');
+    
     let activeColor = 'black';
     let canvasColor = 'white';
     let borderColor = 'grey';
     let borderColorChanged = 'grey';
+    let highlightColor = 'white';
     
-    let borderThickness =  0.5; 
+    let borderThickness = 0.5; 
     let gridIsOn = true;
 
     // Color Palette Creation
@@ -18,9 +20,22 @@ document.addEventListener('DOMContentLoaded', function () {
         colorOption.style.backgroundColor = color;
         colorOption.addEventListener('click', function () {
             activeColor = color;
+            changeSelectedColor = true;
+              changeColorSelection();
+            colorOption.style.border =  "2px solid "+highlightColor;
         });
         colorPickerContainer.appendChild(colorOption);
     });
+
+    function changeColorSelection() {
+        if (changeSelectedColor == true) {
+            const colorOptions = document.querySelectorAll('.color-option');
+            colorOptions.forEach(option => {
+                option.style.border = "none"; // Remove border from all color options
+            });
+            changeSelectedColor = false;
+        }
+    }
 
     // CREATE GRID / CANVAS
     const pixelgrid = document.getElementById('pixelgrid');
@@ -51,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Clear Canvas
     const clearButton = document.getElementById('clear');
     clearButton.addEventListener('click', function () {
-        pixels.forEach(function (pixel) {
+        document.querySelectorAll('.pixel').forEach(function (pixel) {
             pixel.style.backgroundColor = canvasColor;
         });
         borderChange();
@@ -147,4 +162,9 @@ document.addEventListener('DOMContentLoaded', function () {
             pixel.style.borderColor = borderColorChanged; // Restore default border color
         });
     }
+
+    // NEXT STEP:
+    // SAVE BUTTON FUNKTION :)
+    // Border rund um die Ausgewählte Farbe
+
 });

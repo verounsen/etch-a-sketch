@@ -38,14 +38,17 @@ h3 {
 .color-option {
     width: 25px;
     height: 25px;
+    /*box-sizing: content-box;*/
     border-radius: 50%;
     margin-right: 5px;
     cursor: pointer;
+    box-sizing: border-box;
 }
 
 .color-option:hover {
     /* border: 2px solid whitesmoke; */
     filter: brightness(90%);
+    box-sizing: border-box;
 }
 
 
