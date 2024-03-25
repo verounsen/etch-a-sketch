@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const colors = ['black', 'white', 'gold', 'orange', 'red', 'DarkViolet', 'DodgerBlue', 'LimeGreen'];
     const colorPickerContainer = document.getElementById('colorpicker');
     
-    let activeColor = 'black';
+    let activeColor = colors[0]; // Set initial active color to the first color in the array
     let canvasColor = 'white';
     let borderColor = 'grey';
     let borderColorChanged = 'grey';
@@ -14,20 +14,24 @@ document.addEventListener('DOMContentLoaded', function () {
     let gridIsOn = true;
 
     // Color Palette Creation
-    colors.forEach(color => {
+    colors.forEach((color, index) => {
         const colorOption = document.createElement('div');
         colorOption.classList.add('color-option');
         colorOption.style.backgroundColor = color;
+        if (index === 0) { // Add white border to the first color option
+            colorOption.style.border = "2px solid " + highlightColor;
+        }
         colorOption.addEventListener('click', function () {
             activeColor = color;
             changeSelectedColor = true;
-              changeColorSelection();
+              deleteColorSelection();
+              if (activeColor == 'white'){highlightColor = 'grey';}else{highlightColor = 'white';}
             colorOption.style.border =  "2px solid "+highlightColor;
         });
         colorPickerContainer.appendChild(colorOption);
     });
 
-    function changeColorSelection() {
+    function deleteColorSelection() {
         if (changeSelectedColor == true) {
             const colorOptions = document.querySelectorAll('.color-option');
             colorOptions.forEach(option => {
