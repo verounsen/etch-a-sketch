@@ -166,9 +166,34 @@ document.addEventListener('DOMContentLoaded', function () {
             pixel.style.borderColor = borderColorChanged; // Restore default border color
         });
     }
+// Save to png
+document.getElementById('saveCanvas').addEventListener('click', function() {
+    //alert("save clicked!");
+    html2canvas(document.getElementById('pixelgrid'), {
+        scale: 5, // Increase scale for higher resolution (e.g., 2 for double resolution)
+        quality: 3, // JPEG quality (0 to 1, 1 being the highest)
+        logging: true, // PNG compression level (true for less compression, false for default)
+        dpi: 144,
 
-    // NEXT STEP:
-    // SAVE BUTTON FUNKTION :)
-    // Border rund um die Ausgewählte Farbe
+        onrendered: function(canvas) {
+            // Convert the Canvas to a data URL
+            var imageData = canvas.toDataURL('image/png');
+
+            // Create a link to download the image
+            var link = document.createElement('a');
+            link.href = imageData;
+            link.download = 'paint a pixel.png';
+            
+            // Append the link to the document and click it to trigger the download
+            document.body.appendChild(link);
+            link.click();
+
+            // Remove the link from the document
+            document.body.removeChild(link);
+        }
+    });
+});
+
+
 
 });
